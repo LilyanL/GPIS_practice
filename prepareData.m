@@ -27,7 +27,7 @@ function [ptTrainDense, normals, dataRange] = prepareData(noise, downSamples)
     dataRange = [min(ptTrainDense)'-0.1,max(ptTrainDense)'+0.1];
     
     % plot training points and normals
-    if 0
+    if 1
         figure;
         quiver3(ptTrainDense(:,1), ptTrainDense(:,2), ptTrainDense(:,3), normals(:,1), normals(:,2), normals(:,3)); hold on
         axis equal;

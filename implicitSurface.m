@@ -31,11 +31,24 @@ f1 = @(x,y,z) (x.^2 + y.^2 + z.^2 + 1 - 0.5.^2).^2 - 4*(x.^2 + y.^2);
 f2 = @(x,y,z) (x.^2 + y.^2 + z.^2 + 1 - 0.5.^2).^2 - 4*(x.^2 + z.^2);
 f3 = @(x,y,z) (x.^2 + y.^2 + z.^2 + 1 - 0.5.^2).^2 - 4*(y.^2 + z.^2);
 
+
+
 fimplicit3(f1,'EdgeColor','none'); hold on;
-%fimplicit3(f2,'EdgeColor','none'); hold on;
-%fimplicit3(f3,'EdgeColor','none'); hold on;
 shading interp;
 camlight; lighting phong;
 axis equal;
+
+hold off;
+fimplicit3(f2,'EdgeColor','none'); hold on;
+shading interp;
+camlight; lighting phong;
+axis equal;
+
+hold off;
+fimplicit3(f3,'EdgeColor','none'); hold on;
+shading interp;
+camlight; lighting phong;
+axis equal;
+
 title('0 = f(x,y,z) = (x^2 + y^2 + z^2 + 1 - 0.2^2)^2 - 4*(x^2 + y^2)');
 set(gca,'FontSize',15);
