@@ -1,6 +1,8 @@
 clear all;
-% close all;
+close all;
 clc;
+dbstop if error
+
 addpath(genpath('gpml-matlab-v4.2-2018-06-11'));
 
 % prepare dataset
