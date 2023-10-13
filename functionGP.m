@@ -1,9 +1,10 @@
-function [mu,var] = functionGP(ptTrainOn, ptTest, normal)
+function [mu,var] = functionGP(ptTrainOn, ptTest, normal, normalInMagnitude, normalOutMagnitude)
     
     % generating interior and exterior constraints
-    ptTrainOut = ptTrainOn + normal*0.1;
+    ptTrainOut = ptTrainOn + normal*normalOutMagnitude;
     ptTrainOut = ptTrainOut(1:4:end,:);
-    ptTrainIn = [0.6, 0.5, 0.4];  
+    %ptTrainIn = [0.6, 0.5, 0.4];
+    ptTrainIn =  ptTrainOn - normal*normalInMagnitude;
     ptTrainGL = [ptTrainOn; ptTrainOut; ptTrainIn];  
     y = [zeros(size(ptTrainOn,1),1); -1.*ones(size(ptTrainOut,1),1); ...
         1.*ones(size(ptTrainIn,1),1)];    
