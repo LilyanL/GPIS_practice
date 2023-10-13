@@ -38,8 +38,36 @@ f = newFaces;
 
 % show the surface
 figure;
+subplot(1,3,1:2);
 trisurf(f, v(:,1), v(:,2), v(:,3), 'EdgeColor', 'none');
 axis equal;
 view(90,5);
 shading interp;
 camlight; lighting phong;
+
+subplotText = subplot(1,3,3);
+axis off;
+
+textParameters = ['Sampling rate: ', num2str(downSample), '\n', ...
+                  'Grid step:     ', num2str(gridStep), '\n', ...
+                  'Normal in magnitude: ', num2str(normalInMagnitude), '\n', ...
+                  'Normal out magnitude: ', num2str(normalOutMagnitude), '\n', ...
+                  'Noise: ', num2str(noise), '\n', ...
+];
+textParameters = sprintf(textParameters);
+text(0.5,0.5,textParameters, 'EdgeColor', [1 0 0]);
+
+% -----   Save figures -----
+FilenamePNG = strcat(pwd,'\output\', num2str(downSample), '_', num2str(gridStep), '_', num2str(normalInMagnitude), '_', num2str(normalOutMagnitude), '_', num2str(noise), '.png');
+FilenameFig = strcat(pwd,'\output\', num2str(downSample), '_', num2str(gridStep), '_', num2str(normalInMagnitude), '_', num2str(normalOutMagnitude), '_', num2str(noise), '.fig');
+
+if(exist(FilenamePNG, 'file'))
+    delete(FilenamePNG);
+end
+
+if(exist(FilenameFig, 'file'))
+    delete(FilenameFig);
+end
+
+exportgraphics(gcf, FilenamePNG);
+saveas(gcf, FilenameFig);
