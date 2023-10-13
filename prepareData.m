@@ -12,7 +12,7 @@ function [ptTrainDense, normals, dataRange] = prepareData(noise, downSamples)
     normalTot = [normalTot(:,3),normalTot(:,1),normalTot(:,2)];
     
     % normalise points and normals
-    % ptsTot = normalisePoints(ptsTot);
+    ptsTot = normalisePoints(ptsTot);
     normalTot = normalTot ./ sqrt(sum(normalTot.^2, 2));
 
     % add some noise
