@@ -6,18 +6,35 @@ set(0,'DefaultFigureWindowStyle','docked')
 
 addpath(genpath('gpml-matlab-v4.2-2018-06-11'));
 
-% prepare dataset
-downSample = 25;
-noise = 0; % 0.01 0.02 tested
+downSampleVec = [10 5 1];
+gridStepVec = [0.07 0.05 0.03 0.01 0.007];
+normalMagnitudeVec = [0.1 0.07 0.05 0.01];
+noiseVec = [0];
+
+
+for i=1:length(downSampleVec)
+    for j=1:length(gridStepVec)
+        for k=1:length(normalMagnitudeVec)
+            for l=1:length(noiseVec)
+
+
+downSample = downSampleVec(i); % 5
+gridStep = gridStepVec(j); %0.01; % bunny : 0.0233;
+normalInMagnitude = normalMagnitudeVec(k); %normalInMagnitude = 0.05;
+normalOutMagnitude = normalMagnitudeVec(k); %normalOutMagnitude = 0.05;
+noise = noiseVec(l); % 0.01 0.02 tested
+
 [ptTrain, normalTrain, limTest] = prepareData(noise, downSample); 
 
 % get query points ready
-[xg, yg, zg ] = meshgrid( limTest(1,1):0.07:limTest(1,2), ...
-    limTest(2,1):0.07:limTest(2,2), limTest(3,1):0.07:limTest(3,2) );
+
+[xg, yg, zg ] = meshgrid( limTest(1,1):gridStep:limTest(1,2), ...
+    limTest(2,1):gridStep:limTest(2,2), limTest(3,1):gridStep:limTest(3,2) );
 ptTest = single([xg(:), yg(:), zg(:)]);
 
 % GPIS
-[mu,var] = functionGP(ptTrain,ptTest,normalTrain);
+
+[mu,var] = functionGP(ptTrain,ptTest,normalTrain, normalInMagnitude, normalOutMagnitude);
 val = reshape(mu,size(xg));
 
 % marching cube
@@ -72,3 +89,8 @@ end
 
 exportgraphics(gcf, FilenamePNG);
 saveas(gcf, FilenameFig);
+
+            end
+        end
+    end
+end
